@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --account=aopp 
+#SBATCH --partition=standard 
+#SBATCH --qos=short
+#SBATCH --time=01:00:00
+#SBATCH --mem=16000
+#SBATCH --job-name=pps-%A_%a
+#SBATCH -o ./logs/slurm-%A_%a.o
+#SBATCH --array=1-52
+
+file=$(sed ${SLURM_ARRAY_TASK_ID}'q;d' './orcestra_files.lst')
+echo $file
+./find_ec_overpasses.py $file
